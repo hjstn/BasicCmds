@@ -52,7 +52,7 @@ public class BasicCommand {
 		if(i.getArgs().length < 1) {
 			i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.RED).text("Syntax: /" + i.getCommand().getName() + " <message>").build());
 		} else if(BasicCmds.ReplyList.get(i.getCommandSender().getName()) != null) {
-			Player player = Utils.getPlayer(BasicCmds.ReplyList.get(i.getCommandSender()));
+			Player player = Utils.getPlayer(BasicCmds.ReplyList.get(i.getCommandSender().getName()));
 			if(player != null) {
 				String message = StringUtils.join(i.args, " ");
 				player.sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("[" + i.getCommandSender().getName() + " -> me] ").color(ChatColor.WHITE).text(message).build());
