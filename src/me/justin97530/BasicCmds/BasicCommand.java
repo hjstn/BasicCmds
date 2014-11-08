@@ -172,7 +172,7 @@ public class BasicCommand {
 	@Command(name = "pong", info = "DDOS the server!", aliases = {})
 	public void onCommandPong(CommandInfo i) {
 		for (Player p : Granite.getServer().getPlayers()){
-			p.sendMessasge(new ChatComponentBuilder().text(i.getCommandSender().getName() + " tries to DDOS the server!").build());
+			p.sendMessage(new ChatComponentBuilder().text(i.getCommandSender().getName() + " tries to DDOS the server!").build());
 		}
 	}
 }
