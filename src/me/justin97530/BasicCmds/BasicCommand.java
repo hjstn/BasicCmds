@@ -1,5 +1,6 @@
 package me.justin97530.BasicCmds;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -12,8 +13,11 @@ import org.granitemc.granite.api.chat.ChatComponentBuilder;
 import org.granitemc.granite.api.chat.TextComponent;
 import org.granitemc.granite.api.command.Command;
 import org.granitemc.granite.api.command.CommandInfo;
+import org.granitemc.granite.api.entity.Entity;
 import org.granitemc.granite.api.entity.player.Player;
 import org.granitemc.granite.api.plugin.PluginContainer;
+import org.granitemc.granite.api.utils.Location;
+import org.granitemc.granite.api.world.World;
 import org.granitemc.granite.entity.player.GraniteEntityPlayer;
 
 public class BasicCommand {
@@ -67,9 +71,76 @@ public class BasicCommand {
 		}
 	}
 	
+	@Command(name = "ping", info = "Pong!", aliases = {"pong"})
+	public void onCommandPing(CommandInfo i) {
+		i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.YELLOW).text("Pong!").build());
+	}
+	
+	@Command(name = "whois", info = "Who is?", aliases = {})
+	public void onCommandWhois(CommandInfo i) {
+		if(i.getArgs().length < 1 || i.getArgs().length > 1) {
+			i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.RED).text("Syntax: /" + i.getCommand().getName() + " <username>").build());
+		} else {
+			Player player = Utils.getPlayer(i.args[0]);
+			if(player != null) {
+				String IP = "No Data";
+				int Health = -1;
+				Location Loc;
+				int LocX = -1;
+				int LocY = -1;
+				int LocZ = -1;
+				String Held = null;
+				int ID = -1;
+				Location Bed;
+				int BedX = -1;
+				int BedY = -1;
+				int BedZ = -1;
+				int Distance = -1;
+				
+				try {
+					if(player.getPlayerIP() != null) {
+						IP = player.getPlayerIP();
+					}
+					Health = (int) player.getHealth();
+					Loc = player.getLocation();
+					LocX = (int) Loc.getX();
+					LocY = (int) Loc.getY();
+					LocZ = (int) Loc.getZ();
+					Held = player.getHeldItem().getType().getName();
+					ID = player.getEntityId();
+					Bed = player.getBedLocation();
+					BedX = (int) Bed.getX();
+					BedY = (int) Bed.getY();
+					BedZ = (int) Bed.getZ();
+					Distance = (int) player.getDistanceToEntity((Entity) i.getCommandSender());
+					
+				} catch(NullPointerException e) {
+					
+				}
+				
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("Whois reports for " + player.getName()).build());
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("IP: " + IP).build());
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("Health: " + (Health / 20 * 100) + "% | " + Health).build());
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("Location: " + "X: " + LocX + ", Y: " + LocY + ", Z: " + LocZ).build());
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("Held Item: " + Held).build());
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("Entity ID: " + ID).build());
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("Bed Location: " + "X: " + BedX + ", Y: " + BedY + ", Z: " + BedZ).build());
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.GOLD).text("Distance to you: " + Distance).build());
+			} else {
+				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.RED).text("Player not found!").build());
+			}
+		}
+	}
+	
 	@Command(name = "something", info = "???", aliases = {})
 	public void onCommandSomething(CommandInfo i) {
 		i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.RED).showText(new TextComponent("LOL NOOB")).text("Hi, " + i.getCommandSender().getName()).build());
+		Player subject = Utils.getPlayer(i.getCommandSender().getName());
+		subject.setAIMoveSpeed(0.0F);
+		subject.setAIMoveSpeed(-1.0F);
+		subject.setAIMoveSpeed(1.0F);
+		subject.setAIMoveSpeed(0.0F);
+		subject.setAIMoveSpeed(0.2F);
 	}
 	
 	@Command(name = "tp", info = "Teleportation, advanced", aliases = {"teleport"})
