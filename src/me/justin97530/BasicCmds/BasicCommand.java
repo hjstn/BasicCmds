@@ -1,11 +1,5 @@
 package me.justin97530.BasicCmds;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.granitemc.granite.api.Granite;
 import org.granitemc.granite.api.chat.ChatColor;
@@ -17,8 +11,12 @@ import org.granitemc.granite.api.entity.Entity;
 import org.granitemc.granite.api.entity.player.Player;
 import org.granitemc.granite.api.plugin.PluginContainer;
 import org.granitemc.granite.api.utils.Location;
-import org.granitemc.granite.api.world.World;
 import org.granitemc.granite.entity.player.GraniteEntityPlayer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public class BasicCommand {
 	
@@ -71,7 +69,7 @@ public class BasicCommand {
 		}
 	}
 	
-	@Command(name = "ping", info = "Pong!", aliases = {"pong"})
+	@Command(name = "ping", info = "Pong!", aliases = {})
 	public void onCommandPing(CommandInfo i) {
 		i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.YELLOW).text("Pong!").build());
 	}
@@ -168,6 +166,13 @@ public class BasicCommand {
 			} else {
 				i.getCommandSender().sendMessage(new ChatComponentBuilder().color(ChatColor.RED).text("Player not found!").build());
 			}
+		}
+	}
+
+	@Command(name = "pong", info = "DDOS the server!", aliases = {})
+	public void onCommandPong(CommandInfo i) {
+		for (Player p : Granite.getServer().getPlayers()){
+			p.sendMessasge(new ChatComponentBuilder().text(i.getCommandSender().getName() + " tries to DDOS the server!").build());
 		}
 	}
 }
