@@ -7,4 +7,4 @@ Basic Commands, Bukkit style. [Granite Plugin]
 
 Pre-Build jar file
 ===========
-Download the latest build from our jenkins page: [![Build Status](http://ci.logicbit.nl/buildStatus/icon?job=BasicCmds)](http://ci.logicbit.nl/job/BasicCmds/)
+Download the latest build from our Jenkins page: http://ci.logicbit.nl/job/BasicCmds/. [![Build Status](http://ci.logicbit.nl/buildStatus/icon?job=BasicCmds)](http://ci.logicbit.nl/job/BasicCmds/)
